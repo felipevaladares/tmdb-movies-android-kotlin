@@ -21,17 +21,6 @@ class HomeActivity : BaseActivity() {
         setContentView(R.layout.home_activity)
 
         loadViewModel()
-
-        /*
-        api.upcomingMovies(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE, 1, TmdbApi.DEFAULT_REGION)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                val moviesWithGenres = it.results.map { movie ->
-                    movie.copy(genres = Cache.genres.filter { movie.genreIds?.contains(it.id) == true })
-                }
-                loadMoviesAdapter(moviesWithGenres)
-            }*/
     }
 
     private fun loadViewModel() {

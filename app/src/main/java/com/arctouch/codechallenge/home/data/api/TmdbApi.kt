@@ -4,6 +4,8 @@ import com.arctouch.codechallenge.home.data.api.model.GenresResponse
 import com.arctouch.codechallenge.home.data.api.model.MoviesResponse
 import com.arctouch.codechallenge.home.domain.model.Movie
 import io.reactivex.Observable
+import kotlinx.coroutines.Deferred
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -24,12 +26,12 @@ interface TmdbApi {
     ): Observable<GenresResponse>
 
     @GET("movie/upcoming")
-    fun upcomingMovies(
+    fun upcomingMoviesAsync(
         @Query("api_key") apiKey: String,
         @Query("language") language: String,
         @Query("page") page: Long,
         @Query("region") region: String
-    ): Observable<MoviesResponse>
+    ): Deferred<Response<MoviesResponse>>
 
     @GET("movie/{id}")
     fun movie(
