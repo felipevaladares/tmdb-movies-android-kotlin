@@ -1,4 +1,4 @@
-package com.arctouch.codechallenge.util
+package com.arctouch.codechallenge.core.util
 
 import com.arctouch.codechallenge.home.data.api.TmdbApi
 
