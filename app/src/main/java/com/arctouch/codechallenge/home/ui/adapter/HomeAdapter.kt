@@ -1,9 +1,7 @@
 package com.arctouch.codechallenge.home.ui.adapter
 
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.home.domain.model.Movie
 import org.jetbrains.anko.sdk27.listeners.onClick
 
@@ -16,8 +14,7 @@ class HomeAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeMovieViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
-        return HomeMovieViewHolder(view)
+        return HomeMovieViewHolder(parent)
     }
 
     override fun onBindViewHolder(holder: HomeMovieViewHolder, position: Int){

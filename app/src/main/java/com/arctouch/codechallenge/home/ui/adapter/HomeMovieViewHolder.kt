@@ -1,15 +1,16 @@
 package com.arctouch.codechallenge.home.ui.adapter
 
 import android.support.v7.widget.RecyclerView
-import android.view.View
+import android.view.ViewGroup
 import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.core.di.GlideApp
+import com.arctouch.codechallenge.core.extensions.inflate
 import com.arctouch.codechallenge.core.util.MovieImageUrlBuilder
 import com.arctouch.codechallenge.home.domain.model.Movie
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.movie_item.view.*
 
-class HomeMovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class HomeMovieViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(parent.inflate(R.layout.movie_item)) {
 
     private val movieImageUrlBuilder = MovieImageUrlBuilder()
 

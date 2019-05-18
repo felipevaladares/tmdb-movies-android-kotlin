@@ -4,8 +4,8 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import com.arctouch.codechallenge.R
+import com.arctouch.codechallenge.core.extensions.setGone
 import com.arctouch.codechallenge.home.domain.model.Movie
 import com.arctouch.codechallenge.home.presentation.HomeViewModel
 import com.arctouch.codechallenge.home.presentation.HomeViewModelFactory
@@ -41,9 +41,8 @@ class HomeActivity : AppCompatActivity() {
             override fun onMovieClick(movie: Movie) {
                 startMovieActivity(movie)
             }
-
         })
-        progressBar.visibility = View.GONE
+        progressBar.setGone()
     }
 
     private fun startMovieActivity(movie: Movie) {
