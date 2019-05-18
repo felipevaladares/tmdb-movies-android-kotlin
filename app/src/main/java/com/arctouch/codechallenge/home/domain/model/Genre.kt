@@ -1,3 +1,7 @@
 package com.arctouch.codechallenge.home.domain.model
 
-data class Genre(val id: Int, val name: String)
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class Genre(val id: Int, val name: String) : Parcelable

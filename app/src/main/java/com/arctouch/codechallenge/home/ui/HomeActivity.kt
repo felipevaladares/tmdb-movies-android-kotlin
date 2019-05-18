@@ -10,7 +10,9 @@ import com.arctouch.codechallenge.home.domain.model.Movie
 import com.arctouch.codechallenge.home.presentation.HomeViewModel
 import com.arctouch.codechallenge.home.presentation.HomeViewModelFactory
 import com.arctouch.codechallenge.home.ui.adapter.HomeAdapter
+import com.arctouch.codechallenge.movie.MovieActivity
 import kotlinx.android.synthetic.main.home_activity.*
+import org.jetbrains.anko.startActivity
 
 class HomeActivity : BaseActivity() {
 
@@ -35,7 +37,16 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun loadMoviesAdapter(movies: List<Movie>) {
-        recyclerView.adapter = HomeAdapter(movies)
+        recyclerView.adapter = HomeAdapter(movies, object : HomeAdapter.HomeAdapterListener {
+            override fun onMovieClick(movie: Movie) {
+                startMovieActivity(movie)
+            }
+
+        })
         progressBar.visibility = View.GONE
+    }
+
+    private fun startMovieActivity(movie: Movie) {
+        startActivity<MovieActivity>(MovieActivity.ARG_MOVIE to movie)
     }
 }
