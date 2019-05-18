@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.arctouch.codechallenge.R
+import com.arctouch.codechallenge.core.di.GlideApp
+import com.arctouch.codechallenge.core.util.MovieImageUrlBuilder
 import com.arctouch.codechallenge.home.domain.model.Movie
 import kotlinx.android.synthetic.main.movie_fragment.*
 
@@ -33,7 +35,15 @@ class MovieFragment : Fragment() {
     }
 
     private fun loadMovieDetails() {
-        textViewMovieTitle.text = movie?.title
+        textViewTitle.text = movie?.title ?: getString(R.string.not_available)
+        textViewOverview.text = movie?.overview ?: getString(R.string.not_available)
+        textViewReleaseDate.text = movie?.releaseDate ?: getString(R.string.not_available)
+
+        textViewGenres.text = movie?.genres?.joinToString(separator = ", ") { it.name } ?: getString(R.string.not_available)
+
+        GlideApp.with(this)
+                .load(movie?.backdropPath?.let { MovieImageUrlBuilder().buildBackdropUrl(it) })
+                .into(imageViewBackdrop)
     }
 
     companion object {

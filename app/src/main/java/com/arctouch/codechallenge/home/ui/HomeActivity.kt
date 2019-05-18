@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.GridLayoutManager
 import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.core.extensions.setGone
 import com.arctouch.codechallenge.home.domain.model.Movie
@@ -37,6 +38,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun loadMoviesAdapter(movies: List<Movie>) {
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
         recyclerView.adapter = HomeAdapter(movies, object : HomeAdapter.HomeAdapterListener {
             override fun onMovieClick(movie: Movie) {
                 startMovieActivity(movie)

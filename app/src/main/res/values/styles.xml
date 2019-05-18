@@ -15,4 +15,25 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="AppTheme.TextAppearance.HomeItem" parent="AppTheme">
+        <item name="android:paddingStart">6dp</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingEnd">6dp</item>
+        <item name="android:textColor">#FFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:lines">1</item>
+    </style>
+
+
+    <style name="AppTheme.TextAppearance.MovieFragment" parent="AppTheme">
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+    </style>
+
+    <style name="AppTheme.TextAppearance.MovieFragment.Title" parent="AppTheme.TextAppearance.MovieFragment">
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

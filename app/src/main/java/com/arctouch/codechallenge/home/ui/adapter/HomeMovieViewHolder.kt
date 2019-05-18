@@ -15,13 +15,12 @@ class HomeMovieViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(parent.in
     private val movieImageUrlBuilder = MovieImageUrlBuilder()
 
     fun bind(movie: Movie) {
-        itemView.titleTextView.text = movie.title
-        itemView.genresTextView.text = movie.genres?.joinToString(separator = ", ") { it.name }
-        itemView.releaseDateTextView.text = movie.releaseDate
+        itemView.textViewTitle.text = movie.title
+        itemView.textViewGenres.text = movie.genres?.joinToString(separator = ", ") { it.name }
 
         GlideApp.with(itemView)
                 .load(movie.posterPath?.let { movieImageUrlBuilder.buildPosterUrl(it) })
                 .apply(RequestOptions().placeholder(R.drawable.ic_image_placeholder))
-                .into(itemView.posterImageView)
+                .into(itemView.imageViewPoster)
     }
 }
