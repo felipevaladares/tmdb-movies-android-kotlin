@@ -16,7 +16,14 @@ class MovieActivity : AppCompatActivity() {
         setContentView(R.layout.movie_activity)
 
         movie = intent.extras?.getParcelable(ARG_MOVIE)
+        loadToolbar()
         loadViewPager()
+    }
+
+    private fun loadToolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = movie?.title
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun loadViewPager() {
