@@ -1,11 +1,12 @@
-package com.arctouch.codechallenge.home
+package com.arctouch.codechallenge.home.ui
 
 import android.os.Bundle
 import android.view.View
 import com.arctouch.codechallenge.R
-import com.arctouch.codechallenge.api.TmdbApi
 import com.arctouch.codechallenge.base.BaseActivity
-import com.arctouch.codechallenge.data.Cache
+import com.arctouch.codechallenge.home.data.api.TmdbApi
+import com.arctouch.codechallenge.home.data.cache.Cache
+import com.arctouch.codechallenge.home.ui.adapter.HomeAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.home_activity.*
