@@ -1,6 +1,6 @@
 package com.arctouch.codechallenge.home.data.repository
 
-import com.arctouch.codechallenge.home.data.api.TmdbApi
+import com.arctouch.codechallenge.core.api.TmdbApi
 import com.arctouch.codechallenge.home.data.cache.Cache
 import com.arctouch.codechallenge.home.domain.model.Genre
 

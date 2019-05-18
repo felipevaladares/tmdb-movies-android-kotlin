@@ -2,8 +2,8 @@ package com.arctouch.codechallenge.home.presentation
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
-import com.arctouch.codechallenge.home.data.api.TmdbApi
-import com.arctouch.codechallenge.home.data.api.TmdbApiFactory
+import com.arctouch.codechallenge.core.api.TmdbApi
+import com.arctouch.codechallenge.core.api.TmdbApiFactory
 import com.arctouch.codechallenge.home.data.repository.GenresRepository
 import com.arctouch.codechallenge.home.data.repository.MoviesRepository
 import com.arctouch.codechallenge.home.domain.usecase.HomeMoviesUseCase

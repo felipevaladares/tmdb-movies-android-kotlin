@@ -1,4 +1,4 @@
-package com.arctouch.codechallenge.home.data.api
+package com.arctouch.codechallenge.core.api
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient

@@ -1,4 +1,4 @@
-package com.arctouch.codechallenge.home.data.api.model
+package com.arctouch.codechallenge.core.api.model
 
 import com.arctouch.codechallenge.home.domain.model.Genre
 

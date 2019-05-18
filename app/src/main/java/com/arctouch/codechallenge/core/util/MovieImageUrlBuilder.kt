@@ -1,6 +1,6 @@
 package com.arctouch.codechallenge.core.util
 
-import com.arctouch.codechallenge.home.data.api.TmdbApi
+import com.arctouch.codechallenge.core.api.TmdbApi
 
 private val POSTER_URL = "https://image.tmdb.org/t/p/w154"
 private val BACKDROP_URL = "https://image.tmdb.org/t/p/w780"

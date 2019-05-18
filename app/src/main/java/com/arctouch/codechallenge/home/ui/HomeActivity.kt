@@ -67,7 +67,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun updateAdapter(movies: List<Movie>) {
         homeAdapter?.insertItems(movies)
-        endlessRecyclerViewAdapter?.onDataReady(movies.isNotEmpty())
+        endlessRecyclerViewAdapter?.onDataReady(movies.isNotEmpty()) //keep updating at the end off scroll while movies are coming
     }
 
     private fun startMovieActivity(movie: Movie) {

@@ -1,7 +1,7 @@
-package com.arctouch.codechallenge.home.data.api
+package com.arctouch.codechallenge.core.api
 
-import com.arctouch.codechallenge.home.data.api.model.GenresResponse
-import com.arctouch.codechallenge.home.data.api.model.MoviesResponse
+import com.arctouch.codechallenge.core.api.model.GenresResponse
+import com.arctouch.codechallenge.core.api.model.MoviesResponse
 import com.arctouch.codechallenge.home.domain.model.Movie
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
