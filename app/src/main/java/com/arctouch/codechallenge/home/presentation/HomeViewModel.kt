@@ -2,16 +2,22 @@ package com.arctouch.codechallenge.home.presentation
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import com.arctouch.codechallenge.base.BaseViewModel
 import com.arctouch.codechallenge.home.domain.model.Movie
+import com.arctouch.codechallenge.home.domain.usecase.HomeMoviesUseCase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.launch
 
-class HomeViewModel: ViewModel() {
+class HomeViewModel(private val moviesUseCase: HomeMoviesUseCase): BaseViewModel() {
 
     private val _movies = MutableLiveData<List<Movie>>()
     val movies: LiveData<List<Movie>>
         get() = _movies
 
     fun loadMovies() {
-        //TODO load movies from api
+        viewModelScope.launch(Dispatchers.IO) {
+           _movies.postValue(moviesUseCase.getUpcoming())
+        }
     }
 }
