@@ -9,8 +9,8 @@ data class Genre(val id: Int, val name: String)
 data class UpcomingMoviesResponse(
     val page: Int,
     val results: List<Movie>,
-    @Json(name = "total_pages") val totalPages: Int,
-    @Json(name = "total_results") val totalResults: Int
+    @field:Json(name = "total_pages") val totalPages: Int,
+    @field:Json(name = "total_results") val totalResults: Int
 )
 
 data class Movie(
@@ -18,8 +18,8 @@ data class Movie(
     val title: String,
     val overview: String?,
     val genres: List<Genre>?,
-    @Json(name = "genre_ids") val genreIds: List<Int>?,
-    @Json(name = "poster_path") val posterPath: String?,
-    @Json(name = "backdrop_path") val backdropPath: String?,
-    @Json(name = "release_date") val releaseDate: String?
+    @field:Json(name = "genre_ids") val genreIds: List<Int>?,
+    @field:Json(name = "poster_path") val posterPath: String?,
+    @field:Json(name = "backdrop_path") val backdropPath: String?,
+    @field:Json(name = "release_date") val releaseDate: String?
 )
