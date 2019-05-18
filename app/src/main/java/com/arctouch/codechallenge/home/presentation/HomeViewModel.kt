@@ -2,7 +2,7 @@ package com.arctouch.codechallenge.home.presentation
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import com.arctouch.codechallenge.base.BaseViewModel
+import com.arctouch.codechallenge.core.BaseViewModel
 import com.arctouch.codechallenge.home.domain.model.Movie
 import com.arctouch.codechallenge.home.domain.usecase.HomeMoviesUseCase
 import kotlinx.coroutines.Dispatchers

@@ -3,9 +3,9 @@ package com.arctouch.codechallenge.home.ui
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.arctouch.codechallenge.R
-import com.arctouch.codechallenge.base.BaseActivity
 import com.arctouch.codechallenge.home.domain.model.Movie
 import com.arctouch.codechallenge.home.presentation.HomeViewModel
 import com.arctouch.codechallenge.home.presentation.HomeViewModelFactory
@@ -14,7 +14,7 @@ import com.arctouch.codechallenge.movie.MovieActivity
 import kotlinx.android.synthetic.main.home_activity.*
 import org.jetbrains.anko.startActivity
 
-class HomeActivity : BaseActivity() {
+class HomeActivity : AppCompatActivity() {
 
     private lateinit var viewModel: HomeViewModel
 

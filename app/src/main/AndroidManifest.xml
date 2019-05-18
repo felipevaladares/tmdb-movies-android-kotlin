@@ -15,16 +15,13 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name=".splash.SplashActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:name=".home.ui.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".home.ui.HomeActivity" />
 
         <activity
             android:name=".movie.MovieActivity"

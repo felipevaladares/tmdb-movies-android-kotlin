@@ -1,4 +1,4 @@
-package com.arctouch.codechallenge.base
+package com.arctouch.codechallenge.core
 
 import android.arch.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
