@@ -1,18 +1,37 @@
 package com.arctouch.codechallenge.home.data.repository
 
 import com.arctouch.codechallenge.home.data.api.TmdbApi
-import com.arctouch.codechallenge.home.data.api.TmdbApiFactory
+import com.arctouch.codechallenge.home.data.cache.Cache
 import com.arctouch.codechallenge.home.domain.model.Movie
 
-class MoviesRepository() {
+class MoviesRepository(private val api: TmdbApi) {
 
-    private val api: TmdbApi by lazy {
-        TmdbApiFactory.buildTmdbApi()
+    private var currentPage = 0L
+
+    suspend fun getUpcomingMovies(useCache: Boolean, page: Long): List<Movie> {
+        val movies = mutableListOf<Movie>()
+
+        if (useCache && Cache.movies != null) { //verify cached movies
+            movies.addAll(Cache.movies!!)
+        } else {
+            if (page == currentPage) { //verify null cache and same page
+                movies.addAll(getUpcomingMoviesFromApi(currentPage))
+            }
+        }
+
+        if (page != currentPage) { //verify new page
+            currentPage = page
+            movies.addAll(getUpcomingMoviesFromApi(currentPage))
+        }
+
+        Cache.cacheMovies(movies)
+
+        return movies
     }
 
-    suspend fun getUpcomingMovies(): List<Movie> {
+    private suspend fun getUpcomingMoviesFromApi(page: Long): List<Movie> {
         return try {
-            val result = api.upcomingMoviesAsync(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE, 1, TmdbApi.DEFAULT_REGION).await()
+            val result = api.upcomingMoviesAsync(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE, page, TmdbApi.DEFAULT_REGION).await()
             val resultBody = result.body()
             if (result.isSuccessful && resultBody != null) {
                 resultBody.results

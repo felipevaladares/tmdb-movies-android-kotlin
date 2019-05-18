@@ -19,7 +19,7 @@ interface TmdbApi {
     }
 
     @GET("genre/movie/list")
-    fun genres(
+    fun genresAsync(
         @Query("api_key") apiKey: String,
         @Query("language") language: String
     ): Deferred<Response<GenresResponse>>
@@ -33,7 +33,7 @@ interface TmdbApi {
     ): Deferred<Response<MoviesResponse>>
 
     @GET("movie/{id}")
-    fun movie(
+    fun movieAsync(
         @Path("id") id: Long,
         @Query("api_key") apiKey: String,
         @Query("language") language: String

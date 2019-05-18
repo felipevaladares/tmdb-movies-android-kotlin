@@ -6,7 +6,7 @@ import com.arctouch.codechallenge.home.domain.model.Movie
 import org.jetbrains.anko.sdk27.listeners.onClick
 
 class HomeAdapter(
-        private val movies: List<Movie>,
+        private val movies: MutableList<Movie>,
         private val listener: HomeAdapterListener) : RecyclerView.Adapter<HomeMovieViewHolder>() {
 
     interface HomeAdapterListener {
@@ -26,4 +26,10 @@ class HomeAdapter(
     }
 
     override fun getItemCount() = movies.size
+
+    fun insertItems(movies: List<Movie>) {
+        val startPosition = itemCount - 1
+        this.movies.addAll(movies)
+        notifyItemRangeInserted(startPosition, movies.size)
+    }
 }

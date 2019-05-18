@@ -12,12 +12,16 @@ import com.arctouch.codechallenge.home.presentation.HomeViewModel
 import com.arctouch.codechallenge.home.presentation.HomeViewModelFactory
 import com.arctouch.codechallenge.home.ui.adapter.HomeAdapter
 import com.arctouch.codechallenge.movie.MovieActivity
+import com.rockerhieu.rvadapter.endless.EndlessRecyclerViewAdapter
 import kotlinx.android.synthetic.main.home_activity.*
 import org.jetbrains.anko.startActivity
 
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var viewModel: HomeViewModel
+
+    private var homeAdapter: HomeAdapter? = null
+    private var endlessRecyclerViewAdapter: EndlessRecyclerViewAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,13 +42,32 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun loadMoviesAdapter(movies: List<Movie>) {
-        recyclerView.layoutManager = GridLayoutManager(this, 2)
-        recyclerView.adapter = HomeAdapter(movies, object : HomeAdapter.HomeAdapterListener {
+        if (homeAdapter == null) {
+            createAdapter(movies.toMutableList())
+        } else {
+            updateAdapter(movies)
+        }
+    }
+
+    private fun createAdapter(movies: MutableList<Movie>) {
+        homeAdapter = HomeAdapter(movies, object : HomeAdapter.HomeAdapterListener {
             override fun onMovieClick(movie: Movie) {
                 startMovieActivity(movie)
             }
         })
+
+        endlessRecyclerViewAdapter = EndlessRecyclerViewAdapter(this, homeAdapter) {
+            viewModel.loadMovies(false)
+        }
+
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
+        recyclerView.adapter = endlessRecyclerViewAdapter
         progressBar.setGone()
+    }
+
+    private fun updateAdapter(movies: List<Movie>) {
+        homeAdapter?.insertItems(movies)
+        endlessRecyclerViewAdapter?.onDataReady(movies.isNotEmpty())
     }
 
     private fun startMovieActivity(movie: Movie) {
