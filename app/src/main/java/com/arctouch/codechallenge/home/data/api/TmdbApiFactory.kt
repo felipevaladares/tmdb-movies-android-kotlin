@@ -7,7 +7,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 object TmdbApiFactory {
 
-    fun buildMoviesApi(): TmdbApi {
+    fun buildTmdbApi(): TmdbApi {
         return Retrofit.Builder()
                 .baseUrl(TmdbApi.URL)
                 .client(OkHttpClient.Builder().build())

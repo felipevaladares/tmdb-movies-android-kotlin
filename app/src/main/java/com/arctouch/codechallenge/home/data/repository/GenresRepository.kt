@@ -2,20 +2,26 @@ package com.arctouch.codechallenge.home.data.repository
 
 import com.arctouch.codechallenge.home.data.api.TmdbApi
 import com.arctouch.codechallenge.home.data.api.TmdbApiFactory
-import com.arctouch.codechallenge.home.domain.model.Movie
+import com.arctouch.codechallenge.home.data.cache.Cache
+import com.arctouch.codechallenge.home.domain.model.Genre
 
-class MoviesRepository() {
+class GenresRepository() {
 
     private val api: TmdbApi by lazy {
         TmdbApiFactory.buildTmdbApi()
     }
 
-    suspend fun getUpcomingMovies(): List<Movie> {
+    suspend fun getGenres(): List<Genre> {
+        return Cache.genres ?: getGenresFromApi()
+    }
+
+    private suspend fun getGenresFromApi(): List<Genre> {
         return try {
-            val result = api.upcomingMoviesAsync(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE, 1, TmdbApi.DEFAULT_REGION).await()
+            val result = api.genres(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE).await()
             val resultBody = result.body()
             if (result.isSuccessful && resultBody != null) {
-                resultBody.results
+                Cache.cacheGenres(resultBody.genres)
+                resultBody.genres
             } else {
                 //TODO handle api error
                 emptyList()
