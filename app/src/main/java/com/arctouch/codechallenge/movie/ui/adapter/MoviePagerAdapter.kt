@@ -14,7 +14,7 @@ class MoviePagerAdapter(
     override fun getItem(position: Int): Fragment {
         return when (position) {
             0 -> MovieFragment.newInstance(movie)
-            1 -> MovieImagesFragment.newInstance(movie)
+            1 -> MovieImagesFragment()
             else -> throw IllegalArgumentException("Wrong tabs count on MoviePagerAdapter")
         }
     }
