@@ -11,5 +11,5 @@ fun Movie.buildPosterUrl(): String {
 }
 
 fun Movie.buildBackdropUrl(): String {
-    return BACKDROP_URL + posterPath + "?api_key=" + TmdbApi.API_KEY
+    return BACKDROP_URL + backdropPath + "?api_key=" + TmdbApi.API_KEY
 }
