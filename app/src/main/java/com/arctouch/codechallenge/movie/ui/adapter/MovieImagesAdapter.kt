@@ -2,8 +2,9 @@ package com.arctouch.codechallenge.movie.ui.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import com.arctouch.codechallenge.core.domain.model.MovieImage
 
-class MovieImagesAdapter(private val images: List<String>): RecyclerView.Adapter<MovieImageViewHolder>() {
+class MovieImagesAdapter(private val images: List<MovieImage>): RecyclerView.Adapter<MovieImageViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieImageViewHolder {
         return MovieImageViewHolder(parent)

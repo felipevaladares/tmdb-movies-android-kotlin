@@ -1,4 +1,4 @@
-package com.arctouch.codechallenge.home.domain.model
+package com.arctouch.codechallenge.core.domain.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

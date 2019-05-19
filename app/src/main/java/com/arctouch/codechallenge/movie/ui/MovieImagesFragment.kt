@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.arctouch.codechallenge.R
-import com.arctouch.codechallenge.home.domain.model.Movie
+import com.arctouch.codechallenge.core.domain.model.Movie
 import com.arctouch.codechallenge.movie.ui.adapter.MovieImagesAdapter
 import kotlinx.android.synthetic.main.movie_images_fragment.*
 

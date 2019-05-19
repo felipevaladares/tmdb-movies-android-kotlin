@@ -1,6 +1,6 @@
 package com.arctouch.codechallenge.core.api.model
 
-import com.arctouch.codechallenge.home.domain.model.Movie
+import com.arctouch.codechallenge.core.domain.model.Movie
 import com.squareup.moshi.Json
 
 data class MoviesResponse(

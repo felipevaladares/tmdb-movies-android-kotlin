@@ -1,8 +1,8 @@
 package com.arctouch.codechallenge.home.data.repository
 
 import com.arctouch.codechallenge.core.api.TmdbApi
+import com.arctouch.codechallenge.core.domain.model.Genre
 import com.arctouch.codechallenge.home.data.cache.MoviesCache
-import com.arctouch.codechallenge.home.domain.model.Genre
 
 class GenresRepository(private val api: TmdbApi) {
 

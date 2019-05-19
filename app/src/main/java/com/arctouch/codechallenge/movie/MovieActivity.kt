@@ -3,7 +3,7 @@ package com.arctouch.codechallenge.movie
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.arctouch.codechallenge.R
-import com.arctouch.codechallenge.home.domain.model.Movie
+import com.arctouch.codechallenge.core.domain.model.Movie
 import com.arctouch.codechallenge.movie.ui.adapter.MoviePagerAdapter
 import kotlinx.android.synthetic.main.movie_activity.*
 

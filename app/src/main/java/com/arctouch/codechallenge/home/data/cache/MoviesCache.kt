@@ -1,7 +1,7 @@
 package com.arctouch.codechallenge.home.data.cache
 
-import com.arctouch.codechallenge.home.domain.model.Genre
-import com.arctouch.codechallenge.home.domain.model.Movie
+import com.arctouch.codechallenge.core.domain.model.Genre
+import com.arctouch.codechallenge.core.domain.model.Movie
 
 object MoviesCache {
 

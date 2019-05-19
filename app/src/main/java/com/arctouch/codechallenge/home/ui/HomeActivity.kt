@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import com.arctouch.codechallenge.R
+import com.arctouch.codechallenge.core.domain.model.Movie
 import com.arctouch.codechallenge.core.extensions.setGone
-import com.arctouch.codechallenge.home.domain.model.Movie
 import com.arctouch.codechallenge.home.presentation.HomeViewModel
 import com.arctouch.codechallenge.home.presentation.HomeViewModelFactory
 import com.arctouch.codechallenge.home.ui.adapter.HomeAdapter

@@ -1,9 +1,9 @@
 package com.arctouch.codechallenge.home.domain.usecase
 
+import com.arctouch.codechallenge.core.domain.model.Genre
+import com.arctouch.codechallenge.core.domain.model.Movie
 import com.arctouch.codechallenge.home.data.repository.GenresRepository
 import com.arctouch.codechallenge.home.data.repository.MoviesRepository
-import com.arctouch.codechallenge.home.domain.model.Genre
-import com.arctouch.codechallenge.home.domain.model.Movie
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 

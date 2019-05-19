@@ -2,7 +2,7 @@ package com.arctouch.codechallenge.core.api
 
 import com.arctouch.codechallenge.core.api.model.GenresResponse
 import com.arctouch.codechallenge.core.api.model.MoviesResponse
-import com.arctouch.codechallenge.home.domain.model.Movie
+import com.arctouch.codechallenge.core.domain.model.Movie
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.GET
@@ -37,5 +37,12 @@ interface TmdbApi {
         @Path("id") id: Long,
         @Query("api_key") apiKey: String,
         @Query("language") language: String
+    ): Deferred<Response<Movie>>
+
+    @GET("movie/{movie_id}/images")
+    fun movieImafesAsync(
+            @Path("movie_id") id: Long,
+            @Query("api_key") apiKey: String,
+            @Query("language") language: String
     ): Deferred<Response<Movie>>
 }

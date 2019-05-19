@@ -3,7 +3,7 @@ package com.arctouch.codechallenge.movie.ui.adapter
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import com.arctouch.codechallenge.home.domain.model.Movie
+import com.arctouch.codechallenge.core.domain.model.Movie
 import com.arctouch.codechallenge.movie.ui.MovieFragment
 import com.arctouch.codechallenge.movie.ui.MovieImagesFragment
 

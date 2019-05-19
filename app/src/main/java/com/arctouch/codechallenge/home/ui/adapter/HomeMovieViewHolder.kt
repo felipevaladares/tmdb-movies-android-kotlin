@@ -4,9 +4,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.core.di.GlideApp
+import com.arctouch.codechallenge.core.domain.model.Movie
 import com.arctouch.codechallenge.core.extensions.buildPosterUrl
 import com.arctouch.codechallenge.core.extensions.inflate
-import com.arctouch.codechallenge.home.domain.model.Movie
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.movie_item.view.*
 

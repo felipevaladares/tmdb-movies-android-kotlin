@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.core.di.GlideApp
+import com.arctouch.codechallenge.core.domain.model.Movie
 import com.arctouch.codechallenge.core.extensions.buildBackdropUrl
-import com.arctouch.codechallenge.home.domain.model.Movie
 import kotlinx.android.synthetic.main.movie_fragment.*
 
 /**
