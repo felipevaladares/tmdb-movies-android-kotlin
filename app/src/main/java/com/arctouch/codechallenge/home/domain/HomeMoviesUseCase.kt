@@ -1,4 +1,4 @@
-package com.arctouch.codechallenge.home.domain.usecase
+package com.arctouch.codechallenge.home.domain
 
 import com.arctouch.codechallenge.core.domain.model.Genre
 import com.arctouch.codechallenge.core.domain.model.Movie

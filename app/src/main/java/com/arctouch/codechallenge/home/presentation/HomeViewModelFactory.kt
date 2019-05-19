@@ -6,7 +6,7 @@ import com.arctouch.codechallenge.core.api.TmdbApi
 import com.arctouch.codechallenge.core.api.TmdbApiFactory
 import com.arctouch.codechallenge.home.data.repository.GenresRepository
 import com.arctouch.codechallenge.home.data.repository.MoviesRepository
-import com.arctouch.codechallenge.home.domain.usecase.HomeMoviesUseCase
+import com.arctouch.codechallenge.home.domain.HomeMoviesUseCase
 
 class HomeViewModelFactory: ViewModelProvider.Factory  {
 

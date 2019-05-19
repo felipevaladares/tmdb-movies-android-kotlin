@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import com.arctouch.codechallenge.core.BaseViewModel
 import com.arctouch.codechallenge.core.domain.model.Movie
-import com.arctouch.codechallenge.home.domain.usecase.HomeMoviesUseCase
+import com.arctouch.codechallenge.home.domain.HomeMoviesUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
