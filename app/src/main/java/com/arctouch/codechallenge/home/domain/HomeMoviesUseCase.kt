@@ -28,19 +28,23 @@ class HomeMoviesUseCase(
         movies.addAll(moviesRepository.getUpcomingMoviesFromCache())
     }
 
+    @Suppress("UNCHECKED_CAST")
     private suspend fun getUpcomingFromApi(page: Long, movies: MutableList<Movie>, onResult: (Either<Failure, List<Movie>>) -> Unit) {
         var genres = listOf<Genre>()
-        var result: Either<Failure, List<Movie>>? = null
+        var apiResult = Any()
         coroutineScope {
             async { genres = genresRepository.getGenres() }
-            async { result = moviesRepository.getUpcomingMoviesFromApi(page) }
+            async { apiResult = moviesRepository.getUpcomingMoviesFromApi(page) }
         }.await()
 
-        if (result?.isRight == true) {
-            result!!.map { movies.addAll(it) }
-            loadGenres(movies, genres)
+        val result = apiResult as Either<Failure, List<Movie>>
+        if (result.isRight) {
+            result.map {
+                movies.addAll(it)
+                loadGenres(movies, genres)
+            }
         } else {
-            onResult(result!!)
+            onResult(result)
         }
     }
 
