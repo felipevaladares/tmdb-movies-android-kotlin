@@ -46,8 +46,7 @@ class MovieImagesFragment : Fragment() {
     }
 
     private fun loadImages(images: List<MovieImage>) {
-        val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        recyclerViewImages.layoutManager = layoutManager
+        recyclerViewImages.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerViewImages.adapter = MovieImagesAdapter(images)
     }
 

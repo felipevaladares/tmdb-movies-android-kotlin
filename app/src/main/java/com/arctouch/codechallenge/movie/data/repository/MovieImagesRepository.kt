@@ -18,7 +18,6 @@ class MovieImagesRepository(private val api: TmdbApi) {
                 images.addAll(it)
             }
         }
-        images.shuffle()
         return images
     }
 
