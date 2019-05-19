@@ -61,6 +61,7 @@ class HomeActivity : AppCompatActivity() {
         endlessRecyclerViewAdapter = EndlessRecyclerViewAdapter(this, homeAdapter) {
             viewModel.loadMovies(false)
         }
+
         val orientation = resources.configuration.orientation
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             recyclerView.layoutManager = GridLayoutManager(this, 3)

@@ -12,9 +12,9 @@ class MoviesRepository(private val api: TmdbApi) {
         val movies = mutableListOf<Movie>()
 
         if (useCache) movies.addAll(getUpcomingMoviesFromCache())
-        if (page != currentPage) movies.addAll(getUpcomingMoviesFromApi(currentPage))
+        if (page != currentPage) movies.addAll(getUpcomingMoviesFromApi(page))
+        if (movies.isNotEmpty()) currentPage = page
 
-        currentPage = page
         saveToCache(movies)
 
         return movies
@@ -22,7 +22,7 @@ class MoviesRepository(private val api: TmdbApi) {
 
     private suspend fun getUpcomingMoviesFromApi(page: Long): List<Movie> {
         return try {
-            val result = api.upcomingMoviesAsync(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE, page, TmdbApi.DEFAULT_REGION).await()
+            val result = api.upcomingMoviesAsync(page = page).await()
             val resultBody = result.body()
             if (result.isSuccessful && resultBody != null) {
                 resultBody.results
@@ -38,14 +38,10 @@ class MoviesRepository(private val api: TmdbApi) {
     }
 
     private fun getUpcomingMoviesFromCache(): List<Movie> {
-        return if (MoviesCache.movies != null) {
-            MoviesCache.movies!!
-        } else {
-            emptyList()
-        }
+        return MoviesCache.movies
     }
 
     private fun saveToCache(movies: List<Movie>) {
-        MoviesCache.cacheMovies(movies)
+        MoviesCache.cacheMovies(MoviesCache.movies.union(movies).toList())
     }
 }
