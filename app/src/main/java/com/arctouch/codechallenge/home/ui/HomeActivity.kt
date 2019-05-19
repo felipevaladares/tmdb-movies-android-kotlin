@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import com.arctouch.codechallenge.R
+import com.arctouch.codechallenge.core.domain.model.Failure
 import com.arctouch.codechallenge.core.domain.model.Movie
 import com.arctouch.codechallenge.core.extensions.setGone
 import com.arctouch.codechallenge.home.presentation.HomeViewModel
@@ -15,6 +16,8 @@ import com.arctouch.codechallenge.home.ui.adapter.HomeAdapter
 import com.arctouch.codechallenge.movie.MovieActivity
 import com.rockerhieu.rvadapter.endless.EndlessRecyclerViewAdapter
 import kotlinx.android.synthetic.main.home_activity.*
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.longToast
 import org.jetbrains.anko.startActivity
 
 
@@ -35,12 +38,18 @@ class HomeActivity : AppCompatActivity() {
     private fun loadViewModel() {
         viewModel = ViewModelProviders.of(this, HomeViewModelFactory()).get(HomeViewModel::class.java)
 
+
+        viewModel.failure.observe(this, Observer {
+            val failure = it ?: return@Observer
+            notifyFailure(failure)
+        })
+
         viewModel.movies.observe(this, Observer {
             val movies = it ?: return@Observer
             loadMoviesAdapter(movies)
         })
 
-        viewModel.loadMovies()
+        viewModel.loadMovies(true)
     }
 
     private fun loadMoviesAdapter(movies: List<Movie>) {
@@ -59,7 +68,7 @@ class HomeActivity : AppCompatActivity() {
         })
 
         endlessRecyclerViewAdapter = EndlessRecyclerViewAdapter(this, homeAdapter) {
-            viewModel.loadMovies(false)
+            viewModel.loadMovies()
         }
 
         val orientation = resources.configuration.orientation
@@ -74,7 +83,37 @@ class HomeActivity : AppCompatActivity() {
 
     private fun updateAdapter(movies: List<Movie>) {
         homeAdapter?.insertItems(movies)
-        endlessRecyclerViewAdapter?.onDataReady(movies.isNotEmpty()) //keep updating at the end off scroll while movies are coming
+        endlessRecyclerViewAdapter?.onDataReady(true)
+    }
+
+    private fun notifyFailure(failure: Failure) {
+        when (failure) {
+            is Failure.NoDataAvailable -> {
+                longToast(failure.errorMessage)
+                endlessRecyclerViewAdapter?.onDataReady(false)
+            }
+
+            is Failure.NetworkConnection -> {
+                alert(failure.errorMessage, getString(R.string.generic_failure_title)) {
+                    positiveButton(R.string.try_again) {
+                        viewModel.loadMovies()
+                        endlessRecyclerViewAdapter?.onDataReady(true)
+                    }
+                    negativeButton(R.string.cancel) {
+                        dialog -> dialog.dismiss()
+                        endlessRecyclerViewAdapter?.onDataReady(false)
+                    }
+                }.show()
+            }
+
+            is Failure.ServerError -> {
+                endlessRecyclerViewAdapter?.onDataReady(false)
+                alert(getString(R.string.generic_failure_description), getString(R.string.generic_failure_title)) {
+                    positiveButton(R.string.try_again) { viewModel.loadMovies() }
+                    negativeButton(R.string.cancel) {dialog -> dialog.dismiss() }
+                }.show()
+            }
+        }
     }
 
     private fun startMovieActivity(movie: Movie) {

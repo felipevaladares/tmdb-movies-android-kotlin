@@ -1,47 +1,37 @@
 package com.arctouch.codechallenge.home.data.repository
 
 import com.arctouch.codechallenge.core.api.TmdbApi
+import com.arctouch.codechallenge.core.domain.model.Either
+import com.arctouch.codechallenge.core.domain.model.Failure
 import com.arctouch.codechallenge.core.domain.model.Movie
 import com.arctouch.codechallenge.home.data.cache.MoviesCache
+import java.net.UnknownHostException
 
 class MoviesRepository(private val api: TmdbApi) {
 
-    private var currentPage = 0L
-
-    suspend fun getUpcomingMovies(useCache: Boolean, page: Long): List<Movie> {
-        val movies = mutableListOf<Movie>()
-
-        if (useCache) movies.addAll(getUpcomingMoviesFromCache())
-        if (page != currentPage) movies.addAll(getUpcomingMoviesFromApi(page))
-        if (movies.isNotEmpty()) currentPage = page
-
-        saveToCache(movies)
-
-        return movies
-    }
-
-    private suspend fun getUpcomingMoviesFromApi(page: Long): List<Movie> {
+    suspend fun getUpcomingMoviesFromApi(page: Long): Either<Failure, List<Movie>> {
         return try {
             val result = api.upcomingMoviesAsync(page = page).await()
             val resultBody = result.body()
-            if (result.isSuccessful && resultBody != null) {
-                resultBody.results
-            } else {
-                //TODO handle api error
-                emptyList()
+            when {
+                result.isSuccessful && resultBody != null -> Either.Right(resultBody.results)
+                result.isSuccessful && resultBody == null -> Either.Left(Failure.NoDataAvailable())
+                else -> Either.Left(Failure.RequestError())
             }
-        } catch (ex: Exception) {
-            //TODO handle api error
+        } catch (ex: UnknownHostException) {
             ex.printStackTrace()
-            emptyList()
+            Either.Left(Failure.NetworkConnection())
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            Either.Left(Failure.RequestError())
         }
     }
 
-    private fun getUpcomingMoviesFromCache(): List<Movie> {
+    fun getUpcomingMoviesFromCache(): List<Movie> {
         return MoviesCache.movies
     }
 
-    private fun saveToCache(movies: List<Movie>) {
+    fun saveToCache(movies: List<Movie>) {
         MoviesCache.cacheMovies(MoviesCache.movies.union(movies).toList())
     }
 }

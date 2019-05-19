@@ -1,7 +1,6 @@
 package com.arctouch.codechallenge.home.domain
 
-import com.arctouch.codechallenge.core.domain.model.Genre
-import com.arctouch.codechallenge.core.domain.model.Movie
+import com.arctouch.codechallenge.core.domain.model.*
 import com.arctouch.codechallenge.home.data.repository.GenresRepository
 import com.arctouch.codechallenge.home.data.repository.MoviesRepository
 import kotlinx.coroutines.async
@@ -11,17 +10,38 @@ class HomeMoviesUseCase(
         private val genresRepository: GenresRepository,
         private val moviesRepository: MoviesRepository) {
 
-    suspend fun getUpcoming(useCache: Boolean, page: Long): List<Movie> {
+    private var currentPage = 0L
+
+    suspend fun getUpcoming(page: Long, loadFromCache: Boolean, onResult: (Either<Failure, List<Movie>>) -> Unit) {
+        val movies = mutableListOf<Movie>()
+        if (loadFromCache) getUpcomingFromCache(movies)
+        if (page != currentPage) getUpcomingFromApi(page, movies, onResult)
+
+        if (movies.isNotEmpty()){
+            currentPage = page
+            onResult(Either.Right(movies))
+        }
+        moviesRepository.saveToCache(movies)
+    }
+
+    private fun getUpcomingFromCache(movies: MutableList<Movie>) {
+        movies.addAll(moviesRepository.getUpcomingMoviesFromCache())
+    }
+
+    private suspend fun getUpcomingFromApi(page: Long, movies: MutableList<Movie>, onResult: (Either<Failure, List<Movie>>) -> Unit) {
         var genres = listOf<Genre>()
-        var movies = listOf<Movie>()
+        var result: Either<Failure, List<Movie>>? = null
         coroutineScope {
             async { genres = genresRepository.getGenres() }
-            async { movies = moviesRepository.getUpcomingMovies(useCache, page) }
+            async { result = moviesRepository.getUpcomingMoviesFromApi(page) }
         }.await()
 
-        loadGenres(movies, genres)
-
-        return movies
+        if (result?.isRight == true) {
+            result!!.map { movies.addAll(it) }
+            loadGenres(movies, genres)
+        } else {
+            onResult(result!!)
+        }
     }
 
     private fun loadGenres(movies: List<Movie>, genres: List<Genre>) {
