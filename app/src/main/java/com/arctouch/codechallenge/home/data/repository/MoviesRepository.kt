@@ -1,7 +1,7 @@
 package com.arctouch.codechallenge.home.data.repository
 
 import com.arctouch.codechallenge.core.api.TmdbApi
-import com.arctouch.codechallenge.home.data.cache.Cache
+import com.arctouch.codechallenge.home.data.cache.MoviesCache
 import com.arctouch.codechallenge.home.domain.model.Movie
 
 class MoviesRepository(private val api: TmdbApi) {
@@ -11,20 +11,11 @@ class MoviesRepository(private val api: TmdbApi) {
     suspend fun getUpcomingMovies(useCache: Boolean, page: Long): List<Movie> {
         val movies = mutableListOf<Movie>()
 
-        if (useCache && Cache.movies != null) { //verify cached movies
-            movies.addAll(Cache.movies!!)
-        } else {
-            if (page == currentPage) { //verify null cache and same page
-                movies.addAll(getUpcomingMoviesFromApi(currentPage))
-            }
-        }
+        if (useCache) movies.addAll(getUpcomingMoviesFromCache())
+        if (page != currentPage) movies.addAll(getUpcomingMoviesFromApi(currentPage))
 
-        if (page != currentPage) { //verify new page
-            currentPage = page
-            movies.addAll(getUpcomingMoviesFromApi(currentPage))
-        }
-
-        Cache.cacheMovies(movies)
+        currentPage = page
+        saveToCache(movies)
 
         return movies
     }
@@ -44,5 +35,17 @@ class MoviesRepository(private val api: TmdbApi) {
             ex.printStackTrace()
             emptyList()
         }
+    }
+
+    private fun getUpcomingMoviesFromCache(): List<Movie> {
+        return if (MoviesCache.movies != null) {
+            MoviesCache.movies!!
+        } else {
+            emptyList()
+        }
+    }
+
+    private fun saveToCache(movies: List<Movie>) {
+        MoviesCache.cacheMovies(movies)
     }
 }

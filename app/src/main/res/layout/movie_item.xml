@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#78909c"
+        android:background="@color/colorPrimaryDark"
         android:paddingBottom="6dp">
 
         <ImageView
@@ -28,15 +28,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imageViewPoster"
-            style="@style/AppTheme.TextAppearance.HomeItem" />
+            style="@style/AppTheme.TextAppearance.HomeItem.Title" />
 
         <TextView
             android:id="@+id/textViewGenres"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewTitle"
-            style="@style/AppTheme.TextAppearance.HomeItem"
-            android:textSize="12sp" />
+            style="@style/AppTheme.TextAppearance.HomeItem" />
 
     </RelativeLayout>
 
