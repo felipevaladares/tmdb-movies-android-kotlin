@@ -2,6 +2,7 @@ package com.arctouch.codechallenge.home.ui
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
@@ -15,6 +16,7 @@ import com.arctouch.codechallenge.movie.MovieActivity
 import com.rockerhieu.rvadapter.endless.EndlessRecyclerViewAdapter
 import kotlinx.android.synthetic.main.home_activity.*
 import org.jetbrains.anko.startActivity
+
 
 class HomeActivity : AppCompatActivity() {
 
@@ -59,8 +61,12 @@ class HomeActivity : AppCompatActivity() {
         endlessRecyclerViewAdapter = EndlessRecyclerViewAdapter(this, homeAdapter) {
             viewModel.loadMovies(false)
         }
-
-        recyclerView.layoutManager = GridLayoutManager(this, 2)
+        val orientation = resources.configuration.orientation
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            recyclerView.layoutManager = GridLayoutManager(this, 3)
+        } else {
+            recyclerView.layoutManager = GridLayoutManager(this, 2)
+        }
         recyclerView.adapter = endlessRecyclerViewAdapter
         progressBar.setGone()
     }

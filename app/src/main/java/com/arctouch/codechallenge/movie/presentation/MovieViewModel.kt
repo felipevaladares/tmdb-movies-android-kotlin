@@ -11,7 +11,7 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 
 class MovieViewModel(
-        private val movie: Movie,
+        val movie: Movie,
         private val imagesUseCase: MovieImagesUseCase): BaseViewModel() {
 
     private val _images = MutableLiveData<List<MovieImage>>()

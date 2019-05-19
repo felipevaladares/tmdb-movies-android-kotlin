@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:scaleType="centerCrop"
-            android:minHeight="240dp"
+            android:minHeight="260dp"
             tools:ignore="ContentDescription" />
 
         <TextView

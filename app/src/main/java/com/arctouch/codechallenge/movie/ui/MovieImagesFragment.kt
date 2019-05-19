@@ -1,24 +1,29 @@
 package com.arctouch.codechallenge.movie.ui
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.core.domain.model.Movie
+import com.arctouch.codechallenge.core.domain.model.MovieImage
+import com.arctouch.codechallenge.movie.presentation.MovieViewModel
 import com.arctouch.codechallenge.movie.ui.adapter.MovieImagesAdapter
 import kotlinx.android.synthetic.main.movie_images_fragment.*
 
 /**
  * Created by Felipe Valadares on 18/05/2019
  *
- * A fragment to show the images from a movie.
+ * A fragment to show the getPosters from a movie.
  */
 class MovieImagesFragment : Fragment() {
 
     private var movie: Movie? = null
+    private lateinit var viewModel: MovieViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,16 +34,21 @@ class MovieImagesFragment : Fragment() {
         return inflater.inflate(R.layout.movie_images_fragment, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        loadImages()
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProviders.of(requireActivity()).get(MovieViewModel::class.java)
+        viewModel.images.observe(this, Observer {
+            val images = it ?: return@Observer
+            loadImages(images)
+        })
+
+        viewModel.loadImages()
     }
 
-    private fun loadImages() {
-        movie?.images?.let {
-            recyclerViewImages.layoutManager = GridLayoutManager(requireContext(), 3)
-            recyclerViewImages.adapter = MovieImagesAdapter(it)
-        }
+    private fun loadImages(images: List<MovieImage>) {
+        val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerViewImages.layoutManager = layoutManager
+        recyclerViewImages.adapter = MovieImagesAdapter(images)
     }
 
     companion object {
