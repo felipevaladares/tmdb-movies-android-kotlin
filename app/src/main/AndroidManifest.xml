@@ -15,7 +15,7 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name=".home.ui.HomeActivity">
+            android:name=".home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,11 +25,11 @@
 
         <activity
             android:name=".movie.MovieActivity"
-            android:parentActivityName=".home.ui.HomeActivity"
+            android:parentActivityName=".home.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.arctouch.codechallenge.home.ui.HomeActivity" />
+                android:value="com.arctouch.codechallenge.home.HomeActivity" />
         </activity>
     </application>
 
