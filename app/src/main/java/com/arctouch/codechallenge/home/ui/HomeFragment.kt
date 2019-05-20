@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, HomeViewModelFactory()).get(HomeViewModel::class.java)
+        viewModel = ViewModelProviders.of(requireActivity(), HomeViewModelFactory()).get(HomeViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -61,7 +61,7 @@ class HomeFragment : Fragment() {
             loadMoviesAdapter(movies)
         })
 
-        viewModel.loadMovies(false)
+        viewModel.loadMovies(true)
     }
 
     private fun loadMoviesAdapter(movies: List<Movie>) {
