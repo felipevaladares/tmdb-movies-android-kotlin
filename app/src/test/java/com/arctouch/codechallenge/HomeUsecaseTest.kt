@@ -19,21 +19,15 @@ import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import kotlin.test.assertTrue
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
 class HomeUsecaseTest {
-
 
     lateinit var homeMoviesUseCase: HomeMoviesUseCase
 
     @Mock
-    lateinit var genresRepository: GenresRepository
+    lateinit var moviesRepository: MoviesRepository
 
     @Mock
-    lateinit var moviesRepository: MoviesRepository
+    lateinit var genresRepository: GenresRepository
 
     @Before
     fun setUp() {
@@ -46,6 +40,23 @@ class HomeUsecaseTest {
         whenever(moviesRepository.getUpcomingMoviesFromApi(1)).thenReturn(Either.Left(Failure.RequestError()))
         homeMoviesUseCase.getUpcoming(1, true) { result ->
             assertTrue(result.isLeft)
+        }
+    }
+
+    @Test
+    fun `test if usecase is returning movies from api only`() = runTesting {
+        val movieFromApi = Mockito.mock(Movie::class.java)
+        val movieFromCache = Mockito.mock(Movie::class.java)
+        whenever(moviesRepository.getUpcomingMoviesFromCache()).thenReturn(listOf(movieFromCache))
+        whenever(moviesRepository.getUpcomingMoviesFromApi(1)).thenReturn(Either.Right(listOf(movieFromApi)))
+
+        homeMoviesUseCase.getUpcoming(1, false) { result ->
+            result.map {
+                it.size shouldEqual 1
+                it[0] shouldEqual movieFromApi
+            }
+
+            verify(moviesRepository, times(0)).getUpcomingMoviesFromCache()
         }
     }
 
