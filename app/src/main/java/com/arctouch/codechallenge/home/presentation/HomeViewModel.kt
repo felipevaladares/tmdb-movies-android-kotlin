@@ -32,11 +32,11 @@ class HomeViewModel(private val moviesUseCase: HomeMoviesUseCase): BaseViewModel
         }
     }
 
-    private fun handleSuccess(movies: List<Movie>) {
+    fun handleSuccess(movies: List<Movie>) {
         _movies.postValue(movies)
     }
 
-    private fun handleFailure(failure: Failure) {
+    fun handleFailure(failure: Failure) {
         _failure.postValue(failure)
     }
 }

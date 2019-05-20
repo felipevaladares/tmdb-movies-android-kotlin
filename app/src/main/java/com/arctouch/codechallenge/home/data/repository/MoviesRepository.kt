@@ -14,8 +14,8 @@ class MoviesRepository(private val api: TmdbApi) {
             val result = api.upcomingMoviesAsync(page = page).await()
             val resultBody = result.body()
             when {
-                result.isSuccessful && resultBody != null -> Either.Right(resultBody.results)
-                result.isSuccessful && resultBody == null -> Either.Left(Failure.NoDataAvailable())
+                result.isSuccessful && resultBody?.results?.isNotEmpty() == true -> Either.Right(resultBody.results)
+                result.isSuccessful && resultBody?.results?.isEmpty() == true -> Either.Left(Failure.NoDataAvailable())
                 else -> Either.Left(Failure.RequestError())
             }
         } catch (ex: UnknownHostException) {

@@ -33,6 +33,10 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.home_activity)
 
         loadViewModel()
+
+        if (savedInstanceState == null) {
+            viewModel.loadMovies(true)
+        }
     }
 
     private fun loadViewModel() {
@@ -48,8 +52,6 @@ class HomeActivity : AppCompatActivity() {
             val movies = it ?: return@Observer
             loadMoviesAdapter(movies)
         })
-
-        viewModel.loadMovies(true)
     }
 
     private fun loadMoviesAdapter(movies: List<Movie>) {

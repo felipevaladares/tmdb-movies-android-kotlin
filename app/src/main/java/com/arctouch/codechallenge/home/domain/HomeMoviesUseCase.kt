@@ -14,13 +14,19 @@ class HomeMoviesUseCase(
 
     suspend fun getUpcoming(page: Long, loadFromCache: Boolean, onResult: (Either<Failure, List<Movie>>) -> Unit) {
         val movies = mutableListOf<Movie>()
-        if (loadFromCache) getUpcomingFromCache(movies)
-        if (page != currentPage) getUpcomingFromApi(page, movies, onResult)
 
-        if (movies.isNotEmpty()){
+        if (loadFromCache)
+            getUpcomingFromCache(movies)
+
+        if (page != currentPage) {
             currentPage = page
-            onResult(Either.Right(movies))
+            val result = getUpcomingFromApi(page, movies)
+            if (result.isLeft) onResult(result) //notify in case of error
         }
+
+        if (movies.isNotEmpty())
+            onResult(Either.Right(movies))
+
         moviesRepository.saveToCache(movies)
     }
 
@@ -29,22 +35,22 @@ class HomeMoviesUseCase(
     }
 
     @Suppress("UNCHECKED_CAST")
-    private suspend fun getUpcomingFromApi(page: Long, movies: MutableList<Movie>, onResult: (Either<Failure, List<Movie>>) -> Unit) {
+    suspend fun getUpcomingFromApi(page: Long, movies: MutableList<Movie>): Either<Failure, List<Movie>> {
         var genres = listOf<Genre>()
-        var apiResult = Any()
+        var result: Either<Failure, List<Movie>>? = null
         coroutineScope {
             async { genres = genresRepository.getGenres() }
-            async { apiResult = moviesRepository.getUpcomingMoviesFromApi(page) }
+            async { result = moviesRepository.getUpcomingMoviesFromApi(page) }
         }.await()
 
-        val result = apiResult as Either<Failure, List<Movie>>
-        if (result.isRight) {
-            result.map {
+        return if (result?.isRight == true) {// verify success
+            result!!.map {
                 movies.addAll(it)
                 loadGenres(movies, genres)
             }
+            Either.Right(movies)
         } else {
-            onResult(result)
+            result ?: Either.Left(Failure.RequestError())
         }
     }
 
