@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">Code Challenge</string>
     <string name="movie_and_genres">%s - %s</string>
+    <string name="title_activity_movie">MovieActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="release_date">Release Date</string>
+    <string name="genres">Genres</string>
+    <string name="overview">Overview</string>
+    <string name="original_title">Original title</string>
+    <string name="not_available">Not Available</string>
+    <string name="generic_failure_title">Failure</string>
+    <string name="try_again">Try Again</string>
+    <string name="cancel">Cancel</string>
+    <string name="generic_failure_description">Something goes wrong, please verify your connection and try again.</string>
 </resources>
