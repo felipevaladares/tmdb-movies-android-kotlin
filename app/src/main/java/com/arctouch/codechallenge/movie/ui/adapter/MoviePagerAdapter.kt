@@ -1,15 +1,15 @@
 package com.arctouch.codechallenge.movie.ui.adapter
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import com.arctouch.codechallenge.core.domain.model.Movie
 import com.arctouch.codechallenge.movie.ui.MovieFragment
 import com.arctouch.codechallenge.movie.ui.MovieImagesFragment
 
 class MoviePagerAdapter(
         private val movie: Movie,
-        fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+        fragmentManager: FragmentManager) : androidx.fragment.app.FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment {
         return when (position) {

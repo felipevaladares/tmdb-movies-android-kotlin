@@ -1,13 +1,12 @@
 package com.arctouch.codechallenge.movie.ui
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.core.domain.model.MovieImage
 import com.arctouch.codechallenge.core.extensions.setGone
@@ -20,7 +19,7 @@ import kotlinx.android.synthetic.main.movie_images_fragment.*
  *
  * A fragment to show the images from a movie.
  */
-class MovieImagesFragment : Fragment() {
+class MovieImagesFragment : androidx.fragment.app.Fragment() {
 
     private lateinit var viewModel: MovieViewModel
 
@@ -30,8 +29,8 @@ class MovieImagesFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(requireActivity()).get(MovieViewModel::class.java)
-        viewModel.images.observe(this, Observer {
+        viewModel = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
+        viewModel.images.observe(viewLifecycleOwner, Observer {
             val images = it ?: return@Observer
             loadImages(images)
             progressBar.setGone()
@@ -41,7 +40,8 @@ class MovieImagesFragment : Fragment() {
     }
 
     private fun loadImages(images: List<MovieImage>) {
-        recyclerViewImages.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerViewImages.layoutManager = StaggeredGridLayoutManager(
+            2, StaggeredGridLayoutManager.VERTICAL)
         recyclerViewImages.adapter = MovieImagesAdapter(images)
     }
 }

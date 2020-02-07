@@ -1,6 +1,6 @@
 package com.arctouch.codechallenge
 
-import android.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.arctouch.codechallenge.core.domain.model.Either
 import com.arctouch.codechallenge.core.domain.model.Failure
 import com.arctouch.codechallenge.core.domain.model.Movie

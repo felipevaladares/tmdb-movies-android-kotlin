@@ -1,14 +1,14 @@
 package com.arctouch.codechallenge.movie.ui
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.arctouch.codechallenge.R
-import com.arctouch.codechallenge.core.di.GlideApp
 import com.arctouch.codechallenge.core.domain.model.Movie
 import com.arctouch.codechallenge.core.extensions.buildBackdropUrl
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.movie_fragment.*
 
 /**
@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.movie_fragment.*
  *
  * A fragment to show the basic details from a movie.
  */
-class MovieFragment : Fragment() {
+class MovieFragment : androidx.fragment.app.Fragment() {
 
     private var movie: Movie? = null
 
@@ -41,7 +41,7 @@ class MovieFragment : Fragment() {
 
         textViewGenres.text = movie?.genres?.joinToString(separator = ", ") { it.name } ?: getString(R.string.not_available)
 
-        GlideApp.with(this)
+        Glide.with(this)
                 .load(movie?.buildBackdropUrl())
                 .into(imageViewBackdrop)
     }

@@ -1,14 +1,16 @@
 package com.arctouch.codechallenge.movie
 
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.core.domain.model.Movie
 import com.arctouch.codechallenge.movie.presentation.MovieViewModel
 import com.arctouch.codechallenge.movie.presentation.MovieViewModelFactory
 import com.arctouch.codechallenge.movie.ui.adapter.MoviePagerAdapter
-import kotlinx.android.synthetic.main.movie_activity.*
+import kotlinx.android.synthetic.main.movie_activity.tabLayout
+import kotlinx.android.synthetic.main.movie_activity.toolbar
+import kotlinx.android.synthetic.main.movie_activity.viewPager
 
 class MovieActivity : AppCompatActivity() {
 
@@ -28,7 +30,7 @@ class MovieActivity : AppCompatActivity() {
     }
 
     private fun loadViewModel() {
-        viewModel = ViewModelProviders.of(this, MovieViewModelFactory(movie!!)).get(MovieViewModel::class.java)
+        viewModel = ViewModelProvider(this, MovieViewModelFactory(movie!!)).get(MovieViewModel::class.java)
     }
 
     private fun loadToolbar() {
