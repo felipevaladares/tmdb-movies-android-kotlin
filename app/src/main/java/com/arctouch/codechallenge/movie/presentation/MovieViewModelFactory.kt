@@ -1,7 +1,7 @@
 package com.arctouch.codechallenge.movie.presentation
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.arctouch.codechallenge.core.api.TmdbApi
 import com.arctouch.codechallenge.core.api.TmdbApiFactory
 import com.arctouch.codechallenge.core.domain.model.Movie

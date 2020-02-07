@@ -1,6 +1,6 @@
 package com.arctouch.codechallenge.home.ui.adapter
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import com.arctouch.codechallenge.core.domain.model.Movie
 import org.jetbrains.anko.sdk27.listeners.onClick
