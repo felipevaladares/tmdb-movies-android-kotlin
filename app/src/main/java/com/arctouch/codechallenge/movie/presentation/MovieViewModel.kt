@@ -7,7 +7,6 @@ import com.arctouch.codechallenge.core.domain.model.Movie
 import com.arctouch.codechallenge.core.domain.model.MovieImage
 import com.arctouch.codechallenge.movie.domain.MovieImagesUseCase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 
 class MovieViewModel(

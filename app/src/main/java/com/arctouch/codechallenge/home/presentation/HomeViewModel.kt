@@ -7,7 +7,6 @@ import com.arctouch.codechallenge.core.domain.model.Failure
 import com.arctouch.codechallenge.core.domain.model.Movie
 import com.arctouch.codechallenge.home.domain.HomeMoviesUseCase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val moviesUseCase: HomeMoviesUseCase): BaseViewModel() {
