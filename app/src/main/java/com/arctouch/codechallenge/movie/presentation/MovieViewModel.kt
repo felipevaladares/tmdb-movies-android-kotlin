@@ -2,6 +2,7 @@ package com.arctouch.codechallenge.movie.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.arctouch.codechallenge.core.BaseViewModel
 import com.arctouch.codechallenge.core.domain.model.Movie
 import com.arctouch.codechallenge.core.domain.model.MovieImage

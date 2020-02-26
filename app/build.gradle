@@ -42,32 +42,42 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3"
 
-    implementation "com.google.android.material:material:1.1.0"
-
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation "androidx.cardview:cardview:1.0.0"
-    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     implementation "androidx.constraintlayout:constraintlayout:1.1.3"
 
+    def androidX_version = "1.1.0"
     implementation "androidx.appcompat:appcompat:$androidX_version"
     implementation "androidx.recyclerview:recyclerview:$androidX_version"
+    implementation "com.google.android.material:material:$androidX_version"
 
-    implementation 'com.squareup.retrofit2:retrofit:2.7.1'
-    implementation 'com.squareup.retrofit2:converter-moshi:2.7.1'
+    def androidX_lifecycle = "2.2.0"
+    implementation "androidx.lifecycle:lifecycle-extensions:$androidX_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$androidX_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidX_lifecycle"
+
+    def retrofit = "2.7.1"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit"
     implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
 
-    kapt 'com.github.bumptech.glide:compiler:4.11.0'
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    def glide = "4.11.0"
+    kapt "com.github.bumptech.glide:compiler:$glide"
+    implementation "com.github.bumptech.glide:glide:$glide"
     implementation 'com.rockerhieu:rv-adapter-endless:1.2'
 
 
+
+    def androidx_test = "1.2.0"
+    androidTestImplementation "androidx.test:core:$androidx_test"
+    androidTestImplementation "androidx.test:runner:$androidx_test"
+    androidTestImplementation "androidx.test.ext:junit-ktx:1.1.1"
+
+    def androidx_test_espresso = "3.2.0"
     implementation "androidx.test.espresso:espresso-idling-resource:$androidx_test_espresso"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidx_test_espresso"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$androidx_test_espresso"
 
-    androidTestImplementation "androidx.test:core:$androidx_test"
-    androidTestImplementation "androidx.test:runner:$androidx_test"
-    androidTestImplementation "androidx.test.ext:junit-ktx:1.1.1"
 
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.3"
