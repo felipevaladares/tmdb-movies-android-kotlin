@@ -1,10 +1,10 @@
 package com.arctouch.codechallenge.movie.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.core.domain.model.Movie
 import com.arctouch.codechallenge.core.extensions.buildBackdropUrl
@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.movie_fragment.*
  *
  * A fragment to show the basic details from a movie.
  */
-class MovieFragment : androidx.fragment.app.Fragment() {
+class MovieFragment : Fragment() {
 
     private var movie: Movie? = null
 

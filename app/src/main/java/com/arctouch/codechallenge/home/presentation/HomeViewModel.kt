@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.arctouch.codechallenge.core.BaseViewModel
 import com.arctouch.codechallenge.core.domain.model.Failure
 import com.arctouch.codechallenge.core.domain.model.Movie
+import com.arctouch.codechallenge.core.utils.EspressoIdlingResource
 import com.arctouch.codechallenge.home.domain.HomeMoviesUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,9 +27,11 @@ class HomeViewModel(private val moviesUseCase: HomeMoviesUseCase): BaseViewModel
         if (!useCache) currentPage++
 
         viewModelScope.launch(Dispatchers.IO) {
-           moviesUseCase.getUpcoming(currentPage, useCache) { result ->
-               result.either(::handleFailure, ::handleSuccess)
-           }
+            EspressoIdlingResource.increment()
+            moviesUseCase.getUpcoming(currentPage, useCache) { result ->
+                result.either(::handleFailure, ::handleSuccess)
+                EspressoIdlingResource.decrement()
+            }
         }
     }
 
