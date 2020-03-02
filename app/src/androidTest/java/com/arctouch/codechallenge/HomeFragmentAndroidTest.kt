@@ -32,7 +32,7 @@ class HomeFragmentAndroidTest {
     }
 
     @Test
-    fun test_NavigationToDetails() {
+    fun test_NavigationToDetailsAndBack() {
         ActivityScenario.launch(HomeActivity::class.java)
 
         onView(withId(R.id.recyclerView)).perform(
