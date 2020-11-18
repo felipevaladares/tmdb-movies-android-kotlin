@@ -10,6 +10,7 @@ import com.arctouch.codechallenge.core.utils.EspressoIdlingResource
 import com.arctouch.codechallenge.home.domain.HomeMoviesUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class HomeViewModel(private val moviesUseCase: HomeMoviesUseCase): BaseViewModel() {
 
@@ -27,10 +28,22 @@ class HomeViewModel(private val moviesUseCase: HomeMoviesUseCase): BaseViewModel
         if (!useCache) currentPage++
 
         viewModelScope.launch(Dispatchers.IO) {
-            EspressoIdlingResource.increment()
-            moviesUseCase.getUpcoming(currentPage, useCache) { result ->
-                result.either(::handleFailure, ::handleSuccess)
-                EspressoIdlingResource.decrement()
+            runCatching {
+                moviesUseCase.getUpcoming(currentPage, useCache)
+            }.onFailure { error ->
+                handleFailure(error)
+            }.onSuccess { result ->
+                result.map {
+                    handleSuccess(it)
+                }
+            }
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                moviesUseCase.getUpcoming(currentPage, useCache).fold(::handleSuccess, ::handleFailure)
+            } catch (ex: Exception) {
+                ex.printStackTrace()
             }
         }
     }
@@ -39,7 +52,7 @@ class HomeViewModel(private val moviesUseCase: HomeMoviesUseCase): BaseViewModel
         _movies.postValue(movies)
     }
 
-    fun handleFailure(failure: Failure) {
-        _failure.postValue(failure)
+    fun handleFailure(failure: Throwable) {
+        _failure.postValue(failure as Failure)
     }
 }

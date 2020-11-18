@@ -13,6 +13,7 @@ object TmdbApiFactory {
                 .client(OkHttpClient.Builder().build())
                 .addConverterFactory(MoshiConverterFactory.create())
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .addCallAdapterFactory(ResultAdapterFactory())
                 .build()
                 .create(TmdbApi::class.java)
     }

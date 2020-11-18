@@ -5,10 +5,16 @@ import com.arctouch.codechallenge.core.api.model.ImagesResponse
 import com.arctouch.codechallenge.core.api.model.MoviesResponse
 import com.arctouch.codechallenge.core.domain.model.Movie
 import kotlinx.coroutines.Deferred
-import retrofit2.Response
+import okhttp3.Request
+import okio.Timeout
+import retrofit2.*
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import java.io.IOException
+import java.lang.Exception
+import java.lang.reflect.ParameterizedType
+import java.lang.reflect.Type
 
 interface TmdbApi {
 
@@ -26,12 +32,12 @@ interface TmdbApi {
     ): Deferred<Response<GenresResponse>>
 
     @GET("movie/upcoming")
-    fun upcomingMoviesAsync(
+    suspend fun upcomingMoviesAsync(
         @Query("api_key") apiKey: String = API_KEY,
         @Query("language") language: String = DEFAULT_LANGUAGE,
         @Query("page") page: Long,
         @Query("region") region: String? = null
-    ): Deferred<Response<MoviesResponse>>
+    ): Result<MoviesResponse>
 
     @GET("movie/{id}")
     fun movieAsync(
@@ -46,3 +52,24 @@ interface TmdbApi {
             @Query("api_key") apiKey: String = API_KEY
     ): Deferred<Response<ImagesResponse>>
 }
+
+/*
+class MyCallAdapterFactory : CallAdapter.Factory() {
+    override fun get(
+        returnType: Type,
+        annotations: Array<Annotation>,
+        retrofit: Retrofit
+    ) = when (getRawType(returnType)) {
+        Call::class.java -> {
+            val callType = getParameterUpperBound(0, returnType as ParameterizedType)
+            when (getRawType(callType)) {
+                Result::class.java -> {
+                    val resultType = getParameterUpperBound(0, callType as ParameterizedType)
+                    ResultAdapter(resultType)
+                }
+                else -> null
+            }
+        }
+        else -> null
+    }
+}*/

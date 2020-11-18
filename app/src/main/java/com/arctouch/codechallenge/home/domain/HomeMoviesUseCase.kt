@@ -5,6 +5,7 @@ import com.arctouch.codechallenge.home.data.repository.GenresRepository
 import com.arctouch.codechallenge.home.data.repository.MoviesRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import java.lang.Exception
 
 class HomeMoviesUseCase(
         private val genresRepository: GenresRepository,
@@ -12,7 +13,7 @@ class HomeMoviesUseCase(
 
     private var currentPage = 0L
 
-    suspend fun getUpcoming(page: Long, loadFromCache: Boolean, onResult: (Either<Failure, List<Movie>>) -> Unit) {
+    suspend fun getUpcoming(page: Long, loadFromCache: Boolean): Result<List<Movie>> {
         val movies = mutableListOf<Movie>()
 
         if (loadFromCache)
@@ -20,14 +21,15 @@ class HomeMoviesUseCase(
 
         if (page != currentPage) {
             currentPage = page
-            val result = getUpcomingFromApi(page, movies)
-            if (result.isLeft) onResult(result) //notify in case of error
+            return getUpcomingFromApi(page, movies)
         }
 
-        if (movies.isNotEmpty())
-            onResult(Either.Right(movies))
-
         moviesRepository.saveToCache(movies)
+
+        return if (movies.isNotEmpty())
+            Result.success(movies)
+        else
+            Result.failure(Failure.NoDataAvailable())
     }
 
     private fun getUpcomingFromCache(movies: MutableList<Movie>) {
@@ -35,22 +37,23 @@ class HomeMoviesUseCase(
     }
 
     @Suppress("UNCHECKED_CAST")
-    suspend fun getUpcomingFromApi(page: Long, movies: MutableList<Movie>): Either<Failure, List<Movie>> {
+    suspend fun getUpcomingFromApi(page: Long, movies: MutableList<Movie>): Result<List<Movie>> {
         var genres = listOf<Genre>()
-        var result: Either<Failure, List<Movie>>? = null
+        var result: Result<List<Movie>>? = null
         coroutineScope {
             async { genres = genresRepository.getGenres() }
             async { result = moviesRepository.getUpcomingMoviesFromApi(page) }
         }.await()
 
-        return if (result?.isRight == true) {// verify success
+
+        return if (result?.isSuccess == true) {// verify success
             result!!.map {
                 movies.addAll(it)
                 loadGenres(movies, genres)
             }
-            Either.Right(movies)
+            Result.success(movies)
         } else {
-            result ?: Either.Left(Failure.RequestError())
+            result ?: Result.failure(Failure.RequestError())
         }
     }
 

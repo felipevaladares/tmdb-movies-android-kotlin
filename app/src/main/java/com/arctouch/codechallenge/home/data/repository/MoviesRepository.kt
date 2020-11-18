@@ -1,30 +1,82 @@
 package com.arctouch.codechallenge.home.data.repository
 
+import com.arctouch.codechallenge.core.BaseRepository
 import com.arctouch.codechallenge.core.api.TmdbApi
 import com.arctouch.codechallenge.core.domain.model.Either
 import com.arctouch.codechallenge.core.domain.model.Failure
 import com.arctouch.codechallenge.core.domain.model.Movie
 import com.arctouch.codechallenge.home.data.cache.MoviesCache
+import java.lang.Exception
+import java.lang.reflect.Executable
 import java.net.UnknownHostException
 
-class MoviesRepository(private val api: TmdbApi) {
+class MoviesRepository(private val api: TmdbApi): BaseRepository() {
 
-    suspend fun getUpcomingMoviesFromApi(page: Long): Either<Failure, List<Movie>> {
-        return try {
-            val result = api.upcomingMoviesAsync(page = page).await()
-            val resultBody = result.body()
+    suspend fun getUpcomingMoviesFromApi(page: Long): Result<List<Movie>> {
+
+         //adapter
+        //base repo com safeapicall
+        //interceptor
+        //try/catch direto
+        //try/catch viewmodel
+
+        val response = api.upcomingMoviesAsync(page = page)
+        if (response.isSuccess) {
+            val results = response.getOrNull()!!.results
+            return Result.success(results)
+        } else {
+            return Result.failure(Exception())
+        }
+
+        /*
+
+        val response = api.upcomingMoviesAsync(page = page)
+
+
+        return when {
+            response.isSuccessful && response.body()?.results?.isNotEmpty() == true -> Result.success(results)
+            response.isSuccessful && response.body()?.results?.isEmpty() == true -> Result.failure(Failure.NoDataAvailable())
+            else -> Result.failure(Failure.RequestError())//handle error codes
+        }*/
+
+       /* val response = safeApiCall { api.upcomingMoviesAsync(page = page) }
+        val movieResponse = response.getOrElse { error ->
+            return Result.failure(error)
+        }
+        return Result.success(movieResponse.results)*/
+
+        /*
+                return if (response.isSuccess) {
+            response.map {
+                it.results
+            }
+        } else {
+            Result.failure(Failure.RequestError())
+        }
+
+         */
+
+       /* return if (response.isSuccessful) {
+            Result.success(response.body()!!.results)
+        } else {
+            Result.failure(Failure.RequestError())
+        }*/
+
+       /* return try {
+
+            //val resultBody = result.body()
             when {
-                result.isSuccessful && resultBody?.results?.isNotEmpty() == true -> Either.Right(resultBody.results)
-                result.isSuccessful && resultBody?.results?.isEmpty() == true -> Either.Left(Failure.NoDataAvailable())
-                else -> Either.Left(Failure.RequestError())
+                result.isSuccess && resultBody?.results?.isNotEmpty() == true -> Result.success(resultBody.results)
+                result.isSuccess && resultBody?.results?.isEmpty() == true -> Result.failure(Failure.NoDataAvailable())
+                else -> Result.failure(Failure.RequestError())
             }
         } catch (ex: UnknownHostException) {
             ex.printStackTrace()
-            Either.Left(Failure.NetworkConnection())
+            Result.failure(Failure.NetworkConnection())
         } catch (ex: Exception) {
             ex.printStackTrace()
-            Either.Left(Failure.RequestError())
-        }
+            Result.failure(Failure.RequestError())
+        }*/
     }
 
     fun getUpcomingMoviesFromCache(): List<Movie> {

@@ -1,10 +1,12 @@
 package com.arctouch.codechallenge.core.domain.model
 
+import java.lang.Exception
+
 /**
  * Base Class for handling errors/failures/exceptions.
  * Every feature specific failure should extend [FeatureFailure] class.
  */
-sealed class Failure(val errorMessage: String) {
+sealed class Failure(val errorMessage: String): Exception() {
     class NetworkConnection: Failure("Verify your internet connection and try again!")
     class RequestError: Failure("Error loading data!")
     class ServerError: Failure("Server error!")
